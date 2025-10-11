@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mithran Design – Client Registration</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #1f1c2c, #928dab);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+    }
+
+    .form-wrapper {
+      background-color: rgba(255, 255, 255, 0.1);
+      padding: 40px;
+      border-radius: 20px;
+      width: 450px;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+    }
+
+    .form-wrapper h1 {
+      text-align: center;
+      margin-bottom: 10px;
+      font-size: 28px;
+      color: #f9f9f9;
+    }
+
+    .form-wrapper p {
+      text-align: center;
+      font-size: 14px;
+      color: #ddd;
+      margin-bottom: 30px;
+    }
+
+    label {
+      display: block;
+      margin-top: 15px;
+      font-weight: 500;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 10px;
+      margin-top: 5px;
+      border: none;
+      border-radius: 8px;
+      background-color: #fff;
+      color: #333;
+      font-size: 1em;
+    }
+
+    textarea {
+      resize: vertical;
+    }
+
+    .error {
+      color: #ffb3b3;
+      font-size: 0.85em;
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      margin-top: 25px;
+      background-color: #ff6f61;
+      border: none;
+      border-radius: 8px;
+      color: white;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    button:hover {
+      background-color: #e94e3c;
+    }
+
+    .logo {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .logo img {
+      width: 80px;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="form-wrapper">
+    <div class="logo">
+      <!-- Replace with your actual logo -->
+      <img src="https://via.placeholder.com/80x80?text=MD" alt="Mithran Design Logo" />
+    </div>
+    <h1>Client Registration</h1>
+    <p>Welcome to Mithran Design. Let's get started!</p>
+    <form id="clientForm">
+      <label for="clientName">Full Name:</label>
+      <input type="text" id="clientName" name="clientName" required />
+      <div class="error" id="clientNameError"></div>
+
+      <label for="company">Company Name:</label>
+      <input type="text" id="company" name="company" />
+
+      <label for="email">Email Address:</label>
+      <input type="email" id="email" name="email" required />
+      <div class="error" id="emailError"></div>
+
+      <label for="phone">Phone Number:</label>
+      <input type="tel" id="phone" name="phone" pattern="[0-9]{10}" required />
+      <div class="error" id="phoneError"></div>
+
+      <label for="projectType">Project Type:</label>
+      <select id="projectType" name="projectType" required>
+        <option value="">Select</option>
+        <option value="Logo Design">Logo Design</option>
+        <option value="Website Design">Website Design</option>
+        <option value="Branding Package">Branding Package</option>
+        <option value="UI/UX Design">UI/UX Design</option>
+      </select>
+      <div class="error" id="projectTypeError"></div>
+
+      <label for="budget">Estimated Budget (USD):</label>
+      <input type="number" id="budget" name="budget" min="100" required />
+      <div class="error" id="budgetError"></div>
+
+      <label for="details">Project Details:</label>
+      <textarea id="details" name="details" rows="4" placeholder="Tell us more about your project..." required></textarea>
+      <div class="error" id="detailsError"></div>
+
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+
+  <script>
+    const form = document.getElementById('clientForm');
+
+    form.addEventListener('submit', function(event) {
+      let isValid = true;
+      document.querySelectorAll('.error').forEach(el => el.textContent = '');
+
+      const name = document.getElementById('clientName').value.trim();
+      if (name.length < 2) {
+        document.getElementById('clientNameError').textContent = 'Please enter your full name.';
+        isValid = false;
+      }
+
+      const email = document.getElementById('email').value.trim();
+      if (!email.includes('@')) {
+        document.getElementById('emailError').textContent = 'Enter a valid email address.';
+        isValid = false;
+      }
+
+      const phone = document.getElementById('phone').value;
+      if (!/^\d{10}$/.test(phone)) {
+        document.getElementById('phoneError').textContent = 'Enter a valid 10-digit phone number.';
+        isValid = false;
+      }
+
+      const projectType = document.getElementById('projectType').value;
+      if (!projectType) {
+        document.getElementById('projectTypeError').textContent = 'Please select a project type.';
+        isValid = false;
+      }
+
+      const budget = document.getElementById('budget').value;
+      if (!budget || budget < 100) {
+        document.getElementById('budgetError').textContent = 'Minimum budget is $100.';
+        isValid = false;
+      }
+
+      const details = document.getElementById('details').value.trim();
+      if (details.length < 10) {
+        document.getElementById('detailsError').textContent = 'Please provide more details about your project.';
+        isValid = false;
+      }
+
+      if (!isValid) {
+        event.preventDefault();
+      }
+    });
+  </script>
+</body>
+</html>
